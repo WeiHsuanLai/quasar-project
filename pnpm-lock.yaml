@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       '@quasar/extras':
-        specifier: ^1.16.4
+        specifier: ^1.16.17
         version: 1.16.17
       axios:
         specifier: ^1.2.1

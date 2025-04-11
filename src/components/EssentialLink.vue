@@ -1,15 +1,15 @@
 <template>
   <q-item
     clickable
-    tag="a"
-    target="_blank"
-    :href="props.link"
+    v-bind="itemAttrs"                           
+    :class="{ 'text-primary': isActive }"
   >
-    <q-item-section
-      v-if="props.icon"
-      avatar
-    >
-      <q-icon :name="props.icon" />
+    <q-item-section avatar>
+      <q-icon
+        v-if="props.icon"
+        :name="props.icon"
+        :color="isActive ? 'primary' : 'grey-7'"
+      />
     </q-item-section>
 
     <q-item-section>
@@ -20,25 +20,38 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
+import { useRoute } from 'vue-router' 
 const props = defineProps({
-  title: {
-    type: String,
-    required: true
-  },
+  title: String,
+  caption: { type: String, default: '' },
+  icon: { type: String, default: '' },
+  to: { type: String, default: '' },
+  link: { type: String, default: '' }
+})
 
-  caption: {
-    type: String,
-    default: ''
-  },
+const route = useRoute()
 
-  link: {
-    type: String,
-    default: '#'
-  },
+const isActive = computed(() => {
+  if (!props.to) return false
+  // if (props.to === '/home') return route.path === '/home'
+  return route.path.startsWith(props.to)
+})
 
-  icon: {
-    type: String,
-    default: ''
+const itemAttrs = computed(() => {
+  if (props.to) {
+    return { to: props.to }
   }
+
+  if (props.link) {
+    return {
+      tag: 'a',
+      href: props.link,
+      target: '_blank',
+      rel: 'noopener'
+    }
+  }
+
+  return {}
 })
 </script>
