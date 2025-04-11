@@ -5,6 +5,7 @@
       src="~assets/quasar-logo-vertical.svg"
       style="width: 200px; height: 200px"
     >
+    <q-btn color="white" text-color="black" label="Standard" />
   </q-page>
 </template>
 
